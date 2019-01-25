@@ -14,15 +14,11 @@ module.exports = function(msg) {
                         callback_data: 'start'
                     },
                     {
-                        text: '🔄 restart',
-                        callback_data: 'restart'
-                    },
-                    {
                         text: '🛑 stop',
                         callback_data: 'stop'
                     },
                     {
-                        text: '🚧 status',
+                        text: '🔎 status',
                         callback_data: 'status'
                     }
                 ]

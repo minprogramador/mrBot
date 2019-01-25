@@ -9,14 +9,15 @@ const botstatus = require('./src/mrBot/comandos/status');
 const { spawn } = require('child_process');
 const child     = spawn('pwd');
 
-bot.onText(/(\/start|start)/i, comandos.run);
+bot.onText(/(\/init|init)/i, comandos.run);
 
-bot.onText(/(\/stop|stop)/i, comandos.stop);
+bot.onText(/(\/stop|stop|kill|break|para)/i, comandos.stop);
 
-bot.onText(/\/restart/, comandos.restart);
+bot.onText(/(\/restart|reboot|reiniciar)/i, comandos.restart);
+
+bot.onText(/(\/start|start)/i, botinit);
 
 bot.onText(/(\/status|status)/i, botstatus);
-//bot.onText(/\/status (.+)/, comandos.status);
 
 bot.onText(/\/config/, comandos.config);
 
@@ -32,25 +33,36 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     message_id: msg.message_id,
   };
 
+  console.log(action);
   
   if (action === 'edit') {
     let text = 'Aguarde..';
+  bot.editMessageText(text, opts);
+
   }else if (action === 'start') {
     comandos.run;
     let text = 'start, Aguarde..';
+bot.editMessageText(text, opts);
+
   }else if (action === 'stop') {
     comandos.shutdown();
     bot.editMessageText('apis paradas..', opts);
   }else if (action === 'restart') {
+
     console.log(comandos.reboot());
     bot.editMessageText('reboot ok.', opts);
 
+  }else if (action === 'status') {
+
+    comandos.status(msg.chat.id, msg.message_id, bot);
+
   }else{
     let text = '??';
+bot.editMessageText(text, opts);
+
   }
 
-  bot.editMessageText(text, opts);
-
+  
 });
 
 console.log('bot on...');

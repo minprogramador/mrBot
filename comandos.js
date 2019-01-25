@@ -2,8 +2,8 @@
 
 process.env.NTBA_FIX_319 = 1;
 
-const bot   = require('./bot');
 const shild = require("./shild");
+const bot   = require('./bot');
 
 exports.run = (msg, match) => {
 
@@ -45,6 +45,49 @@ exports.shutdown = function() {
   return true;
 }
 
+exports.status = function(chatId, message_id, bot) {
+
+    const option = {
+            chat_id: chatId,
+            message_id: message_id,
+            parse_mode: "Markdown",
+            one_time_keyboard: true,
+            resize_keyboard: true,
+            disable_web_page_preview: true,
+            remove_keyboard: true,
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: '🔄 restart',
+                    callback_data: 'restart'
+                  },
+                  {
+                    text: '🛑 stop',
+                    callback_data: 'stop'
+                  },
+                  {
+                    text: '⚠️ reset',
+                    callback_data: 'reset'
+                  }                  
+                ]
+              ]
+            }
+
+        };    
+
+    const resp1   = "*Url:*  `http://191.96.139.176:7544`\n"+
+                   "*Total contas:*         10\n"+
+                   "*Contas ativas:*        4\n"+
+                   "*Contas inativas:*     1\n"+
+                   "*Pendente rede:*      5\n"+
+                   "*Pendente sessão:*  5\n"+
+                   "*Data start:*   2019-01-25 15:35\n"+
+                   "";
+
+    return bot.editMessageText(resp1, option);
+}
+
 exports.reboot = function() {
   shild.stopPid();
 
@@ -54,44 +97,11 @@ exports.reboot = function() {
   return true;
 }
 
-exports.status = (msg, match) => {
+// exports.status = function(id, bot) {
 
-  const chatId = msg.chat.id;
-  //const resp   = match[1];
-  const resp   = 'qual status??....';
-
-
-const opts = {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: '🔥 start',
-            callback_data: 'start'
-          },
-          {
-            text: '🔄 restart',
-            callback_data: 'restart'
-          },
-          {
-            text: '🛑 stop',
-            callback_data: 'stop'
-          },
-          {
-            text: '🚧 status',
-            callback_data: 'status'
-          }
-        ]
-      ]
-    }
-  };
-
-  bot.sendMessage(chatId, 'Qual o seu desejo ?', opts);
-
-
-
-//  bot.sendMessage(chatId, resp);
-};
+//     const chatId = id;
+//     //const resp   = match[1];
+// };
 
 exports.config = (msg, match) => {
 
@@ -131,9 +141,9 @@ exports.init = function(msg) {
     }
 };
 
-bot.sendMessage(chatId, 'Qual o seu desejo ?', opts);
+// bot.sendMessage(chatId, 'Qual o seu desejo ?', opts);
 
 
-//  bot.sendMessage(chatId, 'Aguarde...');
+// //  bot.sendMessage(chatId, 'Aguarde...');
 };
 
