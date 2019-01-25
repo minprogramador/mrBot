@@ -4,6 +4,7 @@ const bot      = require('./bot');
 const comandos = require('./comandos');
 
 const botinit = require('./src/mrBot/comandos/init');
+const botstatus = require('./src/mrBot/comandos/status');
 
 const { spawn } = require('child_process');
 const child     = spawn('pwd');
@@ -14,12 +15,12 @@ bot.onText(/\/stop/, comandos.stop);
 
 bot.onText(/\/restart/, comandos.restart);
 
-bot.onText(/\/status/, comandos.status);
+bot.onText(/\/status/, botstatus);
 //bot.onText(/\/status (.+)/, comandos.status);
 
 bot.onText(/\/config/, comandos.config);
 
-bot.on('message', botinit);
+//bot.on('message', botinit);
 
 
 // Handle callback queries
