@@ -2,7 +2,6 @@
 
 const bot      = require('./bot');
 const comandos = require('./comandos');
-
 const botinit = require('./src/mrBot/comandos/init');
 const botstatus = require('./src/mrBot/comandos/status');
 
