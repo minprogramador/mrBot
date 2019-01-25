@@ -4,6 +4,7 @@ process.env.NTBA_FIX_319 = 1;
 
 const shild = require("./shild");
 const bot   = require('./bot');
+const infourl = require('./src/mrBot/infourl');
 
 exports.run = (msg, match) => {
 
@@ -47,9 +48,12 @@ exports.shutdown = function() {
 
 exports.status = function(chatId, message_id, bot) {
 
-    const option = {
+
+
+    //const resp   = match[1];
+  const option = {
             chat_id: chatId,
-            message_id: message_id,
+            message_id: message_id,    
             parse_mode: "Markdown",
             one_time_keyboard: true,
             resize_keyboard: true,
@@ -76,16 +80,39 @@ exports.status = function(chatId, message_id, bot) {
 
         };    
 
-    const resp1   = "*Url:*  `http://191.96.139.176:7544`\n"+
-                   "*Total contas:*         10\n"+
-                   "*Contas ativas:*        4\n"+
-                   "*Contas inativas:*     1\n"+
-                   "*Pendente rede:*      5\n"+
-                   "*Pendente sessão:*  5\n"+
-                   "*Data start:*   2019-01-25 15:35\n"+
-                   "";
+//bot.sendMessage(msg.chat.id, "*Some* message here.", option);
 
-    return bot.editMessageText(resp1, option);
+
+  infourl(function(res) {
+
+    const resp   = "*Url:*  `http://191.96.139.176:7544`\n"+
+                   `\n*CPF - total contas:*  ${res.cpf.total}\n`+
+                   `*CPF - contas ativas:*  ${res.cpf.ativos}\n`+
+                   `*CPF - Contas inativas:*  ${res.cpf.inativos}\n`+
+                   `*CPF - pendente rede:*  ${res.cpf['pendente rede']}\n`+
+                   `*CPF - pendente sessão:*  ${res.cpf['pendente sessao']}\n`+
+                   `\n`+
+                   `*CNPJ - total contas:*  ${res.cnpj.total}\n`+
+                   `*CNPJ - contas ativas:*  ${res.cnpj.ativos}\n`+
+                   `*CNPJ - Contas inativas:*  ${res.cnpj.inativos}\n`+
+                   `*CNPJ - pendente rede:*  ${res.cnpj['pendente rede']}\n`+
+                   `*CNPJ - pendente sessão:*  ${res.cnpj['pendente sessao']}\n`+
+                   `*\nData start:*     ${res.start}\n`+
+                   `*Load a 1m:*     ${res.serverinfo.load_oneMin}\n`+
+                   `*Load a 5m:*     ${res.serverinfo.load_fiveMin}\n`+
+                   `*Total tasks:*    ${res.serverinfo.totalTasks}\n`+
+                   `*Men total:*       ${res.serverinfo.men_total}\n`+
+                   `*Men usada:*    ${res.serverinfo.men_usado}\n`+
+                   `*Men livre:*       ${res.serverinfo.men_livre}\n`+
+                   `*Data start:*     ${res.start}\n\nFim status.`;
+    //console.log(res);
+
+   // resp = `${resp} ${resp2}`;
+    return bot.editMessageText(resp, option);
+
+
+  });
+
 }
 
 exports.reboot = function() {
