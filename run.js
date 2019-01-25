@@ -1,53 +1,47 @@
+'use strict';
+
+const bot      = require('./bot');
+const comandos = require('./comandos');
+
+const botinit = require('./src/mrBot/comandos/init');
+
+const { spawn } = require('child_process');
+const child     = spawn('pwd');
+
+bot.onText(/\/start/, comandos.run);
+
+bot.onText(/\/stop/, comandos.stop);
+
+bot.onText(/\/restart/, comandos.restart);
+
+bot.onText(/\/status/, comandos.status);
+//bot.onText(/\/status (.+)/, comandos.status);
+
+bot.onText(/\/config/, comandos.config);
+
+bot.on('message', botinit);
 
 
-process.env.NTBA_FIX_319 = 1;
+// Handle callback queries
+bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+  const action = callbackQuery.data;
+  const msg = callbackQuery.message;
+  const opts = {
+    chat_id: msg.chat.id,
+    message_id: msg.message_id,
+  };
+  let text;
 
-const TelegramBot = require('node-telegram-bot-api');
+  if (action === 'edit') {
+    text = 'Aguarde..';
+  }else if (action === 'start') {
+    text = 'roda a merenda, Aguarde..';
+  }
 
-const token = '714388705:AAH8z02IcJrwAdWZNN8GPvE6gfG7-XU03Qo';
-const bot   = new TelegramBot(token, {polling: true});
-
-bot.onText(/\/start (.+)/, (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const resp   = match[1];
-  bot.sendMessage(chatId, resp);
-});
-
-bot.onText(/\/stop (.+)/, (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const resp   = match[1];
-  bot.sendMessage(chatId, resp);
-});
-
-bot.onText(/\/restart (.+)/, (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const resp   = match[1];
-  bot.sendMessage(chatId, resp);
-});
-
-bot.onText(/\/status (.+)/, (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const resp   = match[1];
-  bot.sendMessage(chatId, resp);
-});
-
-bot.onText(/\/config (.+)/, (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const resp   = match[1];
-  bot.sendMessage(chatId, resp);
-
-});
-
-
-bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
-
-  bot.sendMessage(chatId, 'Received your message');
+  bot.editMessageText(text, opts);
 });
 
 console.log('bot on...');
+
+
+
