@@ -1,7 +1,7 @@
 'use strict';
 
 process.env.NTBA_FIX_319 = 1;
-
+const config = require('./config');
 const shild = require("./shild");
 const bot   = require('./bot');
 const infourl = require('./src/mrBot/infourl');
@@ -9,7 +9,7 @@ const infourl = require('./src/mrBot/infourl');
 exports.run = (msg, match) => {
 
 
-  shild.runPid('/Users/bruno/Desktop/public/demo/main.php');
+  shild.runPid(config.filerun);
   
   const chatId = msg.chat.id;
   //const resp   = match[1];
@@ -32,7 +32,7 @@ exports.restart = (msg, match) => {
   shild.stopPid();
 
   setTimeout(function() {
-    shild.runPid('/Users/bruno/Desktop/public/demo/main.php');
+    shild.runPid(config.filerun);
     const chatId = msg.chat.id;
     //+match[1]
     const resp   = 'Pronto ze mane, restart Ok.';
@@ -85,7 +85,7 @@ exports.status = function(chatId, message_id, bot) {
 
   infourl(function(res) {
 
-    const resp   = "*Url:*  `http://191.96.139.176:7544`\n"+
+    const resp   = "*Url:*  `${config.url}`\n"+
                    `\n*CPF - total contas:*  ${res.cpf.total}\n`+
                    `*CPF - contas ativas:*  ${res.cpf.ativos}\n`+
                    `*CPF - Contas inativas:*  ${res.cpf.inativos}\n`+
@@ -119,16 +119,10 @@ exports.reboot = function() {
   shild.stopPid();
 
   setTimeout(function() {
-    shild.runPid('/Users/bruno/Desktop/public/demo/main.php');
+    shild.runPid(config.filerun);
   }, 1000);
   return true;
 }
-
-// exports.status = function(id, bot) {
-
-//     const chatId = id;
-//     //const resp   = match[1];
-// };
 
 exports.config = (msg, match) => {
 
@@ -142,31 +136,6 @@ exports.config = (msg, match) => {
 
 exports.init = function(msg) {
 
-    const chatId = msg.chat.id;
-    const opts   = {
-        reply_markup: {
-            inline_keyboard: [
-            [
-                {
-                    text: '🔥 start',
-                    callback_data: 'start'
-                },
-                {
-                    text: '🔄 restart',
-                    callback_data: 'restart'
-                },
-                {
-                    text: '🛑 stop',
-                    callback_data: 'stop'
-                },
-                {
-                    text: '🚧 status',
-                    callback_data: 'status'
-                }
-            ]
-        ]
-    }
-};
 
 // bot.sendMessage(chatId, 'Qual o seu desejo ?', opts);
 

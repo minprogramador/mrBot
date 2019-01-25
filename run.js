@@ -39,7 +39,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   bot.editMessageText(text, opts);
 
   }else if (action === 'start') {
-    comandos.run;
+    comandos.reboot();
     let text = 'start, Aguarde..';
 bot.editMessageText(text, opts);
 
