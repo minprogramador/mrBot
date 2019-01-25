@@ -15,11 +15,11 @@ const option = {
               inline_keyboard: [
                 [
                   {
-                    text: '🔄 restart',
+                    text: '🔄 restart all',
                     callback_data: 'restart'
                   },
                   {
-                    text: '🛑 stop',
+                    text: '🛑 stop all',
                     callback_data: 'stop'
                   }
                 ]

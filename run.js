@@ -9,13 +9,13 @@ const botstatus = require('./src/mrBot/comandos/status');
 const { spawn } = require('child_process');
 const child     = spawn('pwd');
 
-bot.onText(/\/start/, comandos.run);
+bot.onText(/(\/start|start)/i, comandos.run);
 
-bot.onText(/\/stop/, comandos.stop);
+bot.onText(/(\/stop|stop)/i, comandos.stop);
 
 bot.onText(/\/restart/, comandos.restart);
 
-bot.onText(/\/status/, botstatus);
+bot.onText(/(\/status|status)/i, botstatus);
 //bot.onText(/\/status (.+)/, comandos.status);
 
 bot.onText(/\/config/, comandos.config);
@@ -31,15 +31,26 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     chat_id: msg.chat.id,
     message_id: msg.message_id,
   };
-  let text;
 
+  
   if (action === 'edit') {
-    text = 'Aguarde..';
+    let text = 'Aguarde..';
   }else if (action === 'start') {
-    text = 'roda a merenda, Aguarde..';
+    comandos.run;
+    let text = 'start, Aguarde..';
+  }else if (action === 'stop') {
+    comandos.shutdown();
+    bot.editMessageText('apis paradas..', opts);
+  }else if (action === 'restart') {
+    console.log(comandos.reboot());
+    bot.editMessageText('reboot ok.', opts);
+
+  }else{
+    let text = '??';
   }
 
   bot.editMessageText(text, opts);
+
 });
 
 console.log('bot on...');

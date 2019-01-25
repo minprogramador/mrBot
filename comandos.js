@@ -40,6 +40,20 @@ exports.restart = (msg, match) => {
   }, 1500);
 };
 
+exports.shutdown = function() {
+  shild.stopPid();
+  return true;
+}
+
+exports.reboot = function() {
+  shild.stopPid();
+
+  setTimeout(function() {
+    shild.runPid('/Users/bruno/Desktop/public/demo/main.php');
+  }, 1000);
+  return true;
+}
+
 exports.status = (msg, match) => {
 
   const chatId = msg.chat.id;
