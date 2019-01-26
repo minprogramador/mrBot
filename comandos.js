@@ -77,8 +77,11 @@ exports.status = function(chatId, message_id) {
             }
     };
 
+    var today = new Date();
+    var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var now = date+' '+time;
     try{
-        let now = new Date(year, month, day, hour, minute, second, millisecond);
         const resp   = "*Url:*  `"+config.url+"`\n"+
                        `\n*CPF - total contas:*  ${res.cpf.total}\n`+
                        `*CPF - contas ativas:*  ${res.cpf.ativos}\n`+
@@ -91,7 +94,7 @@ exports.status = function(chatId, message_id) {
                        `*CNPJ - Contas inativas:*  ${res.cnpj.inativos}\n`+
                        `*CNPJ - pendente rede:*  ${res.cnpj['pendente rede']}\n`+
                        `*CNPJ - pendente sessão:*  ${res.cnpj['pendente sessao']}\n`+
-                      `*Data:* ${now}`+
+                      `\n*Update:*  ${now}`+
                        `\n`;
                        // "*Load a 1m:*     "+res.serverinfo.load_oneMin+"\n"+
                        // "*Load a 5m:*     "+res.serverinfo.load_fiveMin+"\n";
