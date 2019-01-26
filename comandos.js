@@ -61,16 +61,16 @@ exports.status = function(chatId, message_id) {
         inline_keyboard: [
                     [
                         {
-                            text: '🔄 restart',
-                            callback_data: 'restart'
+                            text: '🔄 atulizar',
+                            callback_data: 'status'
                         },
                         {
                             text: '🛑 stop',
                             callback_data: 'stop'
                         },
                         {
-                            text: '⚠️ reset',
-                            callback_data: 'reset'
+                            text: '⚠️ restart',
+                            callback_data: 'restart'
                         }
                     ]
                 ]

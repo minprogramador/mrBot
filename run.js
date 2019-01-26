@@ -95,7 +95,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   }else if (action === 'status') {
     opts.reply_markup.inline_keyboard.push([
                         {
-                            text: 'restart 🔄',
+                            text: 'restart ⚠️',
                             callback_data: 'restart'
                         },
                         {
@@ -103,7 +103,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
                             callback_data: 'stop'
                         },
                         {
-                            text: 'status 🔎',
+                            text: 'atualizar 🔄',
                             callback_data: 'status'
                         }
                     
