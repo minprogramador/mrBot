@@ -4,7 +4,7 @@ const config = require('./config');
 const { spawn, exec } = require('child_process');
 
 const cmd = function(payload, callback) {
-	console.log(payload);
+	//console.log(payload);
 	exec(payload, (err, stdout, stderr) => {
 		if (err) {
 			callback('false');
@@ -35,6 +35,7 @@ exports.runPid = function(script) {
 	return true;
 }
 
+
 exports.stopPid = function(callback) {
 
 	let payload = 'ps ax | grep php';
@@ -47,8 +48,8 @@ exports.stopPid = function(callback) {
 			let pid = res[i];
 
 			cmd(`kill -9 ${pid}`, function(aa) {
-				console.log(aa);
-				console.log(`${pid} deletado`);
+				//console.log(aa);
+				//console.log(`${pid} deletado`);
 			})
 		}
 	})
@@ -73,7 +74,7 @@ const filtraPids = function(res) {
 
 exports.findPids = function(callback) {
 
-	let payload = 'pgrep -l php';
+	let payload = 'ps ax | grep php';
 
 	cmd(payload, function(aa) {
 		callback(filtraPids(aa));
@@ -84,7 +85,7 @@ exports.findPids = function(callback) {
 exports.killPids = function(pid, callback) {
 
 	let payload = 'kill -9' + pid;
-	console.log(prog + ' ' + args);
+	//console.log(prog + ' ' + args);
 	cmd(payload, function(aa) {
 		callback(aa);
 	})

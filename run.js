@@ -39,7 +39,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
         }
   };
 
-  console.log(action);
+  //console.log(action);
   
   if (action === 'edit') {
     let text = 'Aguarde..';
@@ -89,7 +89,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
                     
     ]);
 
-    console.log(comandos.reboot());
+    comandos.reboot();
     bot.editMessageText('reboot ok.', opts);
 
   }else if (action === 'status') {
