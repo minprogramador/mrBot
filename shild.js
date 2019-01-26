@@ -1,16 +1,17 @@
 
+const config = require('./config');
+
 const { spawn, exec } = require('child_process');
 
-const cmd = function(prog, args, callback) {
-
-	const ls = spawn(prog, args);
-	ls.stdout.on('data', (data) => {
-		callback(data.toString());
+const cmd = function(payload, callback) {
+	console.log(payload);
+	exec(payload, (err, stdout, stderr) => {
+		if (err) {
+			callback('false');
+	  	}
+		callback(stdout.toString());
 	});
 
-	ls.stderr.on('data', (data) => {
-		callback('false');
-	});
 };
 
 const execc = function(payload, callback) {
@@ -34,22 +35,20 @@ exports.runPid = function(script) {
 	return true;
 }
 
-exports.stopPid = function() {
+exports.stopPid = function(callback) {
 
-	let prog = 'pgrep';
-	let args = ['-l', 'php'];
+	let payload = 'ps ax | grep php';
 
-	cmd(prog, args, function(res) {
+	cmd(payload, function(res) {
+
 		res = filtraPids(res);
+
 		for(i in res) {
 			let pid = res[i];
 
-			//console.log(pid);
-			let prog = 'kill';
-			let args = ['-9', pid];
-			//console.log(prog + ' ' + args);
-			cmd(prog, args, function(aa) {
-				//console.log(`${pid} deletado`);
+			cmd(`kill -9 ${pid}`, function(aa) {
+				console.log(aa);
+				console.log(`${pid} deletado`);
 			})
 		}
 	})
@@ -61,22 +60,22 @@ const filtraPids = function(res) {
 	let dados = res.split("\n");
 	var list  = [];
 	for (i in dados) {
-		var final = dados[i].split(" ");
-		var final = final[0];
-		if(Number(final)) {
-			list.push(final);
+		if(dados[i].indexOf(config.filerun) > 0) {
+
+			let dPid = dados[i].split(" ")[0];
+			if(dPid){
+				list.push(dPid);
+			}
 		}
 	}
-
 	return list;
 }
 
 exports.findPids = function(callback) {
 
-	let prog = 'pgrep';
-	let args = ['-l', 'php'];
+	let payload = 'pgrep -l php';
 
-	cmd(prog, args, function(aa) {
+	cmd(payload, function(aa) {
 		callback(filtraPids(aa));
 	})
 
@@ -84,10 +83,9 @@ exports.findPids = function(callback) {
 
 exports.killPids = function(pid, callback) {
 
-	let prog = 'kill';
-	let args = ['-9', pid];
+	let payload = 'kill -9' + pid;
 	console.log(prog + ' ' + args);
-	cmd(prog, args, function(aa) {
+	cmd(payload, function(aa) {
 		callback(aa);
 	})
 

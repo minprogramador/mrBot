@@ -30,30 +30,86 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   const opts = {
     chat_id: msg.chat.id,
     message_id: msg.message_id,
+        one_time_keyboard: true,
+        resize_keyboard: true,
+        disable_web_page_preview: true,
+        remove_keyboard: true,
+        reply_markup: {
+            inline_keyboard: []
+        }
   };
 
   console.log(action);
   
   if (action === 'edit') {
     let text = 'Aguarde..';
-  bot.editMessageText(text, opts);
+    bot.editMessageText(text, opts);
 
   }else if (action === 'start') {
+    opts.reply_markup.inline_keyboard.push([
+                        {
+                            text: 'restart 🔄',
+                            callback_data: 'restart'
+                        },
+                        {
+                            text: 'stop 🛑',
+                            callback_data: 'stop'
+                        },
+                        {
+                            text: 'status 🔎',
+                            callback_data: 'status'
+                        }
+                    
+]);
     comandos.reboot();
-    let text = 'start, Aguarde..';
-bot.editMessageText(text, opts);
+    let text = 'start, ok.';
+    bot.editMessageText(text, opts);
 
   }else if (action === 'stop') {
     comandos.shutdown();
+    opts.reply_markup.inline_keyboard.push([{
+                            text: '🔥 start',
+                            callback_data: 'start'
+                        },{
+                            text: 'status 🔎',
+                            callback_data: 'status'
+                        }
+]);
     bot.editMessageText('apis paradas..', opts);
   }else if (action === 'restart') {
+    opts.reply_markup.inline_keyboard.push([
+                        {
+                            text: 'stop 🛑',
+                            callback_data: 'stop'
+                        },
+                        {
+                            text: 'status 🔎',
+                            callback_data: 'status'
+                        }
+                    
+    ]);
 
     console.log(comandos.reboot());
     bot.editMessageText('reboot ok.', opts);
 
   }else if (action === 'status') {
+    opts.reply_markup.inline_keyboard.push([
+                        {
+                            text: 'restart 🔄',
+                            callback_data: 'restart'
+                        },
+                        {
+                            text: 'stop 🛑',
+                            callback_data: 'stop'
+                        },
+                        {
+                            text: 'status 🔎',
+                            callback_data: 'status'
+                        }
+                    
+    ]);
 
-    comandos.status(msg.chat.id, msg.message_id, bot);
+    comandos.status(msg.chat.id, msg.message_id);
 
   }else{
     let text = '??';
