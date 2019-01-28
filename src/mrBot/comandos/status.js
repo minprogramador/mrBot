@@ -55,7 +55,13 @@ module.exports = function(msg, match) {
                        `*CNPJ - Contas inativas:*  ${res.cnpj.inativos}\n`+
                        `*CNPJ - pendente rede:*  ${res.cnpj['pendente rede']}\n`+
                        `*CNPJ - pendente sessão:*  ${res.cnpj['pendente sessao']}\n`+
-                       `*Update:*  ${now}`+
+                       `\n`+
+                       `*Start:*  ${res['start']}\n`+
+                       `*Rede total:*  ${res['rede total']}\n`+
+                       `*Rede on:*  ${res['rede on']}\n`+
+                       `*Rede off:*  ${res['rede off']}\n`+
+                       `*Rede max:*  ${res['rede max']}\n`+
+                      `\n*Update:*  ${now}`+
                        `\n`;
 
         bot.sendMessage(chatId, resp, option);
