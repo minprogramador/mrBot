@@ -1,11 +1,11 @@
 'use strict';
 
-const bot      = require('./bot');
-const comandos = require('./comandos');
-const botinit = require('./src/mrBot/comandos/init');
+const botinit   = require('./src/mrBot/comandos/init');
 const botstatus = require('./src/mrBot/comandos/status');
-
+const bot       = require('./lib/bot');
+const comandos  = require('./lib/comandos');
 const { spawn } = require('child_process');
+
 const child     = spawn('pwd');
 
 bot.onText(/(\/init|init)/i, comandos.run);

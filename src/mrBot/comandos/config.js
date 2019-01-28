@@ -1,6 +1,6 @@
 'use strict';
 
-const bot   = require('./bot');
+const bot   = require('./lib/bot');
 
 exports.config = (msg, match) => {
 

@@ -1,7 +1,7 @@
 'use strict';
 
-const bot   = require('../../../bot');
-const config = require('../../../config');
+const bot   = require('../../../lib/bot');
+const config = require('../../../config/config');
 const infourl = require('../infourl');
 
 module.exports = function(msg, match) {
