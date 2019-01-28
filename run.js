@@ -48,18 +48,17 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   }else if (action === 'start') {
     opts.reply_markup.inline_keyboard.push([
                         {
+                            text: 'status 🔎',
+                            callback_data: 'status'
+                        },
+                        {
                             text: 'restart 🔄',
                             callback_data: 'restart'
                         },
                         {
                             text: 'stop 🛑',
                             callback_data: 'stop'
-                        },
-                        {
-                            text: 'status 🔎',
-                            callback_data: 'status'
                         }
-                    
 ]);
     comandos.reboot();
     let text = 'start, ok.';
@@ -79,12 +78,12 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   }else if (action === 'restart') {
     opts.reply_markup.inline_keyboard.push([
                         {
-                            text: 'stop 🛑',
-                            callback_data: 'stop'
-                        },
-                        {
                             text: 'status 🔎',
                             callback_data: 'status'
+                        },
+                        {
+                            text: 'stop 🛑',
+                            callback_data: 'stop'
                         }
                     
     ]);
@@ -93,22 +92,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.editMessageText('reboot ok.', opts);
 
   }else if (action === 'status') {
-    opts.reply_markup.inline_keyboard.push([
-                        {
-                            text: 'restart ⚠️',
-                            callback_data: 'restart'
-                        },
-                        {
-                            text: 'stop 🛑',
-                            callback_data: 'stop'
-                        },
-                        {
-                            text: 'atualizar 🔄',
-                            callback_data: 'status'
-                        }
-                    
-    ]);
-
+    
     comandos.status(msg.chat.id, msg.message_id);
 
   }else{

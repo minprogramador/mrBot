@@ -8,7 +8,7 @@ module.exports = function(msg, match) {
 
   const chatId = msg.chat.id;
 
-  infourl(function(res) {
+  infourl(config.url, function(res) {
 
     const option = {
         parse_mode: "Markdown",
@@ -20,16 +20,16 @@ module.exports = function(msg, match) {
         inline_keyboard: [
                     [
                         {
-                            text: '🔄 restart',
-                            callback_data: 'restart'
+                            text: '🔄 atualizar',
+                            callback_data: 'status'
                         },
                         {
                             text: '🛑 stop',
                             callback_data: 'stop'
                         },
                         {
-                            text: '⚠️ reset',
-                            callback_data: 'reset'
+                            text: '⚠️ restart',
+                            callback_data: 'restart'
                         }
                     ]
                 ]
@@ -54,7 +54,7 @@ module.exports = function(msg, match) {
 
         bot.sendMessage(chatId, resp, option);
     }catch(e){
-        const resp = 'merda';
+        const resp = 'Off-line.';
         bot.sendMessage(chatId, resp, option);
 
     }

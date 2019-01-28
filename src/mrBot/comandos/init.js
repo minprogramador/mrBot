@@ -10,16 +10,16 @@ module.exports = function(msg) {
             inline_keyboard: [
                 [
                     {
+                        text: '🔎 status',
+                        callback_data: 'status'
+                    },
+                    {
                         text: '🔥 start',
                         callback_data: 'start'
-                    },
+                    },                    
                     {
                         text: '🛑 stop',
                         callback_data: 'stop'
-                    },
-                    {
-                        text: '🔎 status',
-                        callback_data: 'status'
                     }
                 ]
             ]

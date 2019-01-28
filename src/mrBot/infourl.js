@@ -35,9 +35,11 @@ const curl = function(ip, port, path, callback) {
     request.end();
 };
 
-const getInfo = function(callback) {
-	let ip = '191.96.139.176';
-	let port = 7544;
+const getInfo = function(url, callback) {
+	let ur = url.split(":");
+
+	let ip = ur[0];
+	let port = ur[1];
 	let path = '/';
 
 	curl(ip, port, path, function(res) {
@@ -53,9 +55,9 @@ const getInfo = function(callback) {
 	});
 }
 
-module.exports = function(callback) {
+module.exports = function(url, callback) {
 
-	getInfo(function(res) {
+	getInfo(url, function(res) {
 		callback(res);
 	});
 
