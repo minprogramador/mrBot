@@ -10,6 +10,11 @@ module.exports = function(msg, match) {
 
   infourl(config.url, function(res) {
 
+    var today = new Date();
+    var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var now = date+' '+time;
+
     const option = {
         parse_mode: "Markdown",
         one_time_keyboard: true,
@@ -50,11 +55,13 @@ module.exports = function(msg, match) {
                        `*CNPJ - Contas inativas:*  ${res.cnpj.inativos}\n`+
                        `*CNPJ - pendente rede:*  ${res.cnpj['pendente rede']}\n`+
                        `*CNPJ - pendente sessão:*  ${res.cnpj['pendente sessao']}\n`+
+                       `*Update:*  ${now}`+
                        `\n`;
 
         bot.sendMessage(chatId, resp, option);
     }catch(e){
-        const resp = 'Off-line.';
+        const resp = `Off-line. \n*Update:*  ${now}`;
+        bot.editMessageText(resp, option);
         bot.sendMessage(chatId, resp, option);
 
     }
